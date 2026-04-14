@@ -129,6 +129,57 @@ public class FoodDAO {
 			disConnection();
 		}
 	}
+	
+	// 검색 => 한식 / 중식 / 분식 / 양식 / 일식 
+	public List<FoodVO> foodFindData(String type)
+	{
+		List<FoodVO> list=
+				new ArrayList<FoodVO>();
+		try
+		{
+			// 연결 
+			getConnection();
+			// SQL문장 
+			String sql="SELECT no,name,type,address,phone "
+					  +"FROM food "
+					  //+"WHERE type LIKE '%'||?||'%' "
+					  +"WHERE type LIKE '%"+type+"%'"
+					  +"ORDER BY no ASC";
+			// 전송 (오라클)
+			ps=conn.prepareStatement(sql);
+			// 실행전에 ?에 값을 채운다 
+			//ps.setString(1, type);
+			// 실행후에 결과값을 가지고 온다 
+			ResultSet rs=ps.executeQuery();
+			while(rs.next())
+			{
+				/*System.out.println(
+				  rs.getInt(1)+" "
+				  +rs.getString(2)+" "
+				  +rs.getString(3)+" "
+				  +rs.getString(4)+" "
+				  +rs.getString(5)
+				);*/
+				FoodVO vo=new FoodVO();
+				vo.setNo(rs.getInt(1));
+				vo.setName(rs.getString(2));
+				vo.setType(rs.getString(3));
+				vo.setAddress(rs.getString(4));
+				vo.setPhone(rs.getString(5));
+				list.add(vo);
+			}
+			rs.close();
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			disConnection();
+		}
+		return list;
+	}
+	
 }
 
 
