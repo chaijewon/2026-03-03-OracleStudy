@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import com.sist.dao.BoardDAO;
+import com.sist.vo.BoardVO;
 public class BoardInsert extends JPanel
 implements ActionListener
 {
@@ -59,6 +62,7 @@ implements ActionListener
     	add(p);
     	
     	b2.addActionListener(this);
+    	b1.addActionListener(this);
     	
     }
 	@Override
@@ -67,6 +71,59 @@ implements ActionListener
 		if(e.getSource()==b2)
 		{
 			mf.cp.card.show(mf.cp,"BLIST");
+		}
+		else if(e.getSource()==b1)
+		{
+			String name=nameTf.getText();
+			//입력된 값 읽기  ==> 오라클 : NOT NULL
+			if(name.trim().length()<1) // 유효성 검사 
+			{
+				// 입력이 안된 경우
+				nameTf.requestFocus();
+				return;
+			}
+			
+			String subject=subTf.getText();
+			//입력된 값 읽기  ==> 오라클 : NOT NULL
+			if(subject.trim().length()<1) // 유효성 검사 
+			{
+				// 입력이 안된 경우
+				subTf.requestFocus();
+				return;
+			}
+			
+			String content=ta.getText();
+			//입력된 값 읽기  ==> 오라클 : NOT NULL
+			if(content.trim().length()<1) // 유효성 검사 
+			{
+				// 입력이 안된 경우
+				ta.requestFocus();
+				return;
+			}
+			// char[] => 문자열 변경 => String.valueOf
+			String pwd=
+				String.valueOf(pwdPf.getPassword());
+			//입력된 값 읽기  ==> 오라클 : NOT NULL
+			if(pwd.trim().length()<1) // 유효성 검사 
+			{
+				// 입력이 안된 경우
+				pwdPf.requestFocus();
+				return;
+			}
+			
+			BoardVO vo=new BoardVO();
+			vo.setName(name);
+			vo.setSubject(subject);
+			vo.setContent(content);
+			vo.setPwd(pwd);
+			
+			// 데이터베이스 연동 
+			BoardDAO dao=BoardDAO.newInstance();
+			dao.board_insert(vo);
+			
+			// 이동 => boardList로 이동 
+			mf.cp.card.show(mf.cp, "BLIST");
+			mf.cp.bList.print();
 		}
 	}
 }
