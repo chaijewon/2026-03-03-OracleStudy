@@ -5,6 +5,10 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.*;
+
+import com.sist.dao.*;
+import com.sist.vo.*;
+
 public class BoardList extends JPanel 
 implements ActionListener
 {
@@ -90,6 +94,8 @@ implements ActionListener
     	
     	prevBtn.addActionListener(this);
     	nextBtn.addActionListener(this);
+    	inBtn.addActionListener(this);
+    	print();
     }
     public void print()
     {
@@ -99,11 +105,33 @@ implements ActionListener
     		model.removeRow(i);
     	}
     	
+    	// 오라클 연동 
+    	BoardDAO dao=BoardDAO.newInstance();
+    	List<BoardVO> list=dao.board_list(curpage);
+    	totalpage=dao.boardTotalPage();
     	
+    	// 목록 출력 
+    	for(BoardVO vo:list)
+    	{
+    		String[] data={
+    			String.valueOf(vo.getNo()),
+    			vo.getSubject(),
+    			vo.getName(),
+    			vo.getDbday(),
+    			String.valueOf(vo.getHit())
+    		};
+    		model.addRow(data);
+    	}
+    	// 페이지 지정 
+    	pageLa.setText(curpage + " page / "
+    	              +totalpage+" pages");
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource()==inBtn)
+		{
+			mf.cp.card.show(mf.cp, "BINSERT");
+		}
 	}
 }

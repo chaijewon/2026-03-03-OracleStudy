@@ -6,14 +6,17 @@ public class ControllerPenal extends JPanel{
 	CardLayout card=new CardLayout();
 	UserMainForm mf;
 	BoardList bList;
+	BoardInsert bInsert;
 	HomePanel hp=new HomePanel();
     public ControllerPenal(UserMainForm mf)
     {
     	this.mf=mf;
     	bList=new BoardList(mf);
+    	bInsert=new BoardInsert(mf);
     	setLayout(card);
     	//setBackground(Color.CYAN);
     	add("HOME",hp);
     	add("BLIST",bList);
+    	add("BINSERT",bInsert);
     }
 }
