@@ -30,6 +30,7 @@ implements ActionListener
         	UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
         }catch(Exception ex) {}
         new UserMainForm();
+        new UserMainForm();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

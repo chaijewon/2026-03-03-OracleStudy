@@ -69,6 +69,7 @@ implements ActionListener
     	 add(p);
     	 
     	 b3.addActionListener(this);
+    	 b2.addActionListener(this);
      }
      public void print(int num)
      {
@@ -89,6 +90,11 @@ implements ActionListener
 		{
 			mf.cp.card.show(mf.cp, "BLIST");
 			mf.cp.bList.print();
+		}
+		else if(e.getSource()==b2)
+		{
+			mf.cp.bDelete.pf.setText("");
+			mf.cp.card.show(mf.cp, "BDELETE");
 		}
 	 }
 }
