@@ -1,14 +1,23 @@
 package com.sist.main;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.*;
-public class MovieMain extends JFrame{
+import com.sist.vo.*;
+import com.sist.dao.*;
+public class MovieMain extends JFrame 
+implements ActionListener
+{
 	JButton prevBtn,nextBtn;
     JLabel pageLa,titleLa;
     JTable table;
     DefaultTableModel model;
     TableColumn column;
+    MovieDAO dao=new MovieDAO();
+    int curpage=1;
+    int totalpage=0;
     public MovieMain()
     {
     	
@@ -43,15 +52,15 @@ public class MovieMain extends JFrame{
     		}
     		else if(i==1)
     		{
-    			column.setPreferredWidth(350);
+    			column.setPreferredWidth(150);
     		}
     		else if(i==2)
     		{
-    			column.setPreferredWidth(100);
+    			column.setPreferredWidth(250);
     		}
     		else if(i==3)
     		{
-    			column.setPreferredWidth(150);
+    			column.setPreferredWidth(200);
     		}
     		else if(i==4)
     		{
@@ -82,10 +91,62 @@ public class MovieMain extends JFrame{
     	setSize(850, 730);
     	setVisible(true);
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	print();
+    	
+    	prevBtn.addActionListener(this);
+    	nextBtn.addActionListener(this);
+    }
+    public void print()
+    {
+    	// 테이블을 전체를 지운다 
+    	for(int i=model.getRowCount()-1;i>=0;i--)
+    	{
+    		model.removeRow(i);
+    	}
+    	
+    	// 데이터 읽기 
+    	List<MovieVO> list=dao.movieListData(curpage);
+    	totalpage=dao.movieTotalPage();
+    	
+    	for(MovieVO vo:list)
+    	{
+    		String[] data={
+    			String.valueOf(vo.getMno()),
+    			vo.getTitle(),
+    			vo.getActor(),
+    			vo.getRegdate(),
+    			vo.getGenre()
+    			
+    		};
+    		model.addRow(data);
+    	}
+    	
+    	pageLa.setText(curpage+" page / "+totalpage+" pages");
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         new MovieMain();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		// 버튼 클릭시 처리 
+		if(e.getSource()==prevBtn)
+		{
+			if(curpage>1)
+			{
+				curpage--;
+				print();
+			}
+		}
+		else if(e.getSource()==nextBtn)
+		{
+			if(curpage<totalpage)
+			{
+				curpage++;
+				print();
+			}
+		}
 	}
 
 }

@@ -127,7 +127,36 @@ public class MovieDAO {
 	   List<MovieVO> list=new ArrayList<MovieVO>();
 	   try
 	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장 
+		   String sql="SELECT mno,title,genre,actor,regdate "
+				     +"FROM movie "
+				     +"ORDER BY mno "
+				     +"OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY";
+		   // 3. 오라클 전송 
+		   ps=conn.prepareStatement(sql);
+		   // 4. ?에 값을 채운다 
+		   int start=(page*20)-20; // 0 20 40...
+		   ps.setInt(1, start);
 		   
+		   // 5. 실행후에 결과값 받기 
+		   ResultSet rs=ps.executeQuery();
+		   // new 
+		   while(rs.next())
+		   {
+			   // ROW 1개당 => VO ==> 20개 
+			   MovieVO vo=new MovieVO();
+			   // ROW단위 => 저장 
+			   vo.setMno(rs.getInt(1));
+			   vo.setTitle(rs.getString(2));
+			   vo.setGenre(rs.getString(3));
+			   vo.setActor(rs.getString(4));
+			   vo.setRegdate(rs.getString(5));
+			   // 전체 저장 
+			   list.add(vo);
+		   }
+		   rs.close();
 	   }catch(Exception ex)
 	   {
 		   ex.printStackTrace();
@@ -138,13 +167,65 @@ public class MovieDAO {
 	   }
 	   return list;
    }
+   // 1-1. 총페이지
+   public int movieTotalPage()
+   {
+	   int total=0;
+	   try
+	   {
+		   // 1. 연결 
+		   getConnection();
+		   // 2. SQL문장 만들기 
+		   String sql="SELECT CEIL(COUNT(*)/20.0) "
+				     +"FROM movie";
+		   // 3. 오라클 전송 
+		   ps=conn.prepareStatement(sql);
+		   // 4. 실행후에 결과값을 가지고 온다 
+		   ResultSet rs=ps.executeQuery();
+		   // 5. 데이터가 출력된 위치에 커서를 올려둔다 
+		   // 첫번째줄에 
+		   rs.next();
+		   total=rs.getInt(1);
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return total;
+   }
    // 2. 상세보기 
    public MovieVO movieDetailData(int mno)
    {
 	   MovieVO vo=new MovieVO();
 	   try
 	   {
-		   
+		   // 1. 연결 
+		   getConnection();
+		   // 2. SQL문장 
+		   String sql="SELECT mno,title,actor,genre,"
+				     +"grade,regdate,director "
+				     +"FROM movie "
+				     +"WHERE mno=?";
+		   //3. 오라클로 전송
+		   ps=conn.prepareStatement(sql);
+		   //4. ?에 값을 채운다 
+		   ps.setInt(1, mno);
+		   //5. 실행후 결과값 읽기
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   // 6. 데이터 저장 
+		   vo.setMno(rs.getInt(1));
+		   vo.setTitle(rs.getString(2));
+		   vo.setActor(rs.getString(3));
+		   vo.setGenre(rs.getString(4));
+		   vo.setGrade(rs.getString(5));
+		   vo.setRegdate(rs.getString(6));
+		   vo.setDirector(rs.getString(7));
+		   rs.close();
 	   }catch(Exception ex)
 	   {
 		   ex.printStackTrace();
