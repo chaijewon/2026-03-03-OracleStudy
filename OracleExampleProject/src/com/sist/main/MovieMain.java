@@ -8,7 +8,7 @@ import javax.swing.table.*;
 import com.sist.vo.*;
 import com.sist.dao.*;
 public class MovieMain extends JFrame 
-implements ActionListener
+implements ActionListener,MouseListener
 {
 	JButton prevBtn,nextBtn;
     JLabel pageLa,titleLa;
@@ -95,6 +95,7 @@ implements ActionListener
     	
     	prevBtn.addActionListener(this);
     	nextBtn.addActionListener(this);
+    	table.addMouseListener(this);
     }
     public void print()
     {
@@ -147,6 +148,50 @@ implements ActionListener
 				print();
 			}
 		}
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==table)
+		{
+			if(e.getClickCount()==2)// 더블 클릭
+			{
+				// 1. 선택된 ROW 위치 
+				int row=table.getSelectedRow();
+				String mno=model.getValueAt(row, 0).toString();
+				MovieVO vo=dao.movieDetailData(
+						     Integer.parseInt(mno));
+				String msg="영화번호:"+vo.getMno()+"\n"
+						 +"영화명:"+vo.getTitle()+"\n"
+						 +"출연:"+vo.getActor()+"\n"
+						 +"감독:"+vo.getDirector()+"\n"
+						 +"장르:"+vo.getGenre()+"\n"
+						 +"등급:"+vo.getGrade()+"\n"
+						 +"개봉일:"+vo.getRegdate();
+				JOptionPane.showMessageDialog(this, 
+						 msg);
+			}
+		}
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
