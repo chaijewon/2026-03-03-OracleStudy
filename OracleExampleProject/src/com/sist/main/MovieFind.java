@@ -1,9 +1,16 @@
 package com.sist.main;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.*;
-public class MovieFind extends JFrame{
+
+import com.sist.dao.*;
+import com.sist.vo.*;
+public class MovieFind extends JFrame
+implements ActionListener
+{
     JLabel titleLa;
     JTable table;
     DefaultTableModel model;
@@ -11,6 +18,7 @@ public class MovieFind extends JFrame{
     JComboBox box;
     JTextField tf;
     JButton b;
+    MovieDAO dao=new MovieDAO();
     public MovieFind()
     {
     	
@@ -90,10 +98,55 @@ public class MovieFind extends JFrame{
     	setSize(850, 700);
     	setVisible(true);
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	
+    	tf.addActionListener(this);
+    	b.addActionListener(this);
+    }
+    public void print(String col,String fd)
+    {
+    	for(int i=model.getRowCount()-1;i>=0;i--)
+    	{
+    		model.removeRow(i);
+    	}
+    	// 데이터 읽기 
+    	List<MovieVO> list=dao.movieFindData(col, fd);
+    	for(MovieVO vo:list)
+    	{
+    		String[] data={
+    			String.valueOf(vo.getMno()),
+    			vo.getTitle(),
+    			vo.getActor(),
+    			vo.getRegdate(),
+    			vo.getGenre()
+    		};
+    		
+    		model.addRow(data);
+    	}
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         new MovieFind();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==b || e.getSource()==tf)
+		{
+			String fd=tf.getText();
+			// 입력값 읽기 
+			if(fd.trim().length()<1)
+			{
+				// 입력이 안됨 
+				tf.requestFocus();
+				return;
+			}
+			
+			String[] column={"title","genre","actor"};
+			int index=box.getSelectedIndex();
+			System.out.println(fd);
+			System.out.println(column[index]);
+			print(column[index],fd);
+		}
 	}
 
 }

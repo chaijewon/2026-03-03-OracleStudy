@@ -254,7 +254,35 @@ public class MovieDAO {
 	   List<MovieVO> list=new ArrayList<MovieVO>();
 	   try
 	   {
-		   
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL 문장 제작 
+		   String sql="SELECT mno,title,actor,regdate,genre "
+				     +"FROM movie "
+				     +"WHERE "+col+" LIKE '%'||?||'%'";
+		   // "WHERE "+col+" LIKE '%"+'fd'+"%'" 
+		   // 자바 => 오라클 SQL (LIKE)
+		   // 3. 오라클로 전송 
+		   ps=conn.prepareStatement(sql);
+		   // 4. ?에 값 채우기
+		   ps.setString(1, fd);
+		   // 5. 실행후에 결과값 읽기
+		   ResultSet rs=ps.executeQuery();
+		   // new 
+		   while(rs.next())
+		   {
+			   // ROW 1개당 => VO ==> 20개 
+			   MovieVO vo=new MovieVO();
+			   // ROW단위 => 저장 
+			   vo.setMno(rs.getInt("mno"));
+			   vo.setTitle(rs.getString("title"));
+			   vo.setGenre(rs.getString("genre"));
+			   vo.setActor(rs.getString("actor"));
+			   vo.setRegdate(rs.getString("regdate"));
+			   // 전체 저장 
+			   list.add(vo);
+		   }
+		   rs.close();
 	   }catch(Exception ex)
 	   {
 		   ex.printStackTrace();
