@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import com.sist.commons.ImageChange;
 import com.sist.dao.GoodsDAO;
@@ -14,7 +15,7 @@ import java.awt.event.*;
 import java.net.URI;
 import java.net.URL;
 public class HomePanel extends JPanel
-implements ActionListener
+implements ActionListener,MouseListener
 {
    ControlPanel cp;
    JPanel pan=new JPanel();
@@ -58,6 +59,8 @@ implements ActionListener
 	   pp.add(b5);pp.add(la);pp.add(b6);
 	   pp.setBounds(10, 550, 920, 35);
 	   add(pp);
+	   b5.addActionListener(this); // 이전
+	   b6.addActionListener(this); // 다음
    }
    public void init()
    {
@@ -90,6 +93,9 @@ implements ActionListener
 			   imgs[i]=new JLabel(new ImageIcon(image));
 			   imgs[i].setToolTipText(vo.getGoods_name());
 			   pan.add(imgs[i]);
+			   
+			   // 이벤트 등록 => 자바스크립트 
+			   imgs[i].addMouseListener(this);
 		   }catch(Exception ex) {}
 	   }
 	   la.setText(curpage+" page / "+totalpage+" pages");
@@ -129,5 +135,62 @@ implements ActionListener
 		   print();
 		   revalidate();
 	   }
+	   else if(e.getSource()==b5)
+	   {
+		   if(curpage>1)
+		   {
+			   curpage--;
+			   init();
+			   print();
+			   //revalidate();
+		   }
+	   }
+	   else if(e.getSource()==b6)
+	   {
+		   if(curpage<totalpage)
+		   {
+			   curpage++;
+			   init();
+			   print();
+			   //testrevalidate();
+		   }
+	   }
+   }
+   @Override
+   public void mouseClicked(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mousePressed(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseReleased(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseEntered(MouseEvent e) {
+	// TODO Auto-generated method stub
+	  for(int i=0;i<imgs.length;i++)
+	  {
+		  if(e.getSource()==imgs[i])
+		  {
+			  imgs[i].setBorder(new LineBorder(Color.red,3));
+		  }
+	  }
+   }
+   @Override
+   public void mouseExited(MouseEvent e) {
+	// TODO Auto-generated method stub
+	   for(int i=0;i<imgs.length;i++)
+		  {
+			  if(e.getSource()==imgs[i])
+			  {
+				  imgs[i].setBorder(null);
+			  }
+		  }
    }
 }
