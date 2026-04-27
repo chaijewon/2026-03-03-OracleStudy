@@ -11,6 +11,7 @@ public class ControlPanel extends JPanel{
 	// 1. HOME 
 	HomePanel hp;
 	GoodsDetailForm gdf;
+	JoinPanel jp;
 	CardLayout card=new CardLayout();
     public ControlPanel()
     {
@@ -18,7 +19,9 @@ public class ControlPanel extends JPanel{
     	setLayout(card);
     	hp=new HomePanel(this);
     	gdf=new GoodsDetailForm(this);
+    	jp=new JoinPanel(this);
     	add("HOME",hp);
     	add("DETAIL",gdf);
+    	add("JOIN",jp);
     }
 }

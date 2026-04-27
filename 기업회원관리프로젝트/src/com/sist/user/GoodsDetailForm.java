@@ -90,6 +90,8 @@ implements ActionListener
          p.add(box);p.add(b1);p.add(b2);
          p.setBounds(330, 200, 435, 35);
          add(p);
+         
+         b2.addActionListener(this);
     }
     public void print(int type,int gno)
     {
@@ -116,6 +118,9 @@ implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource()==b2)
+		{
+			cp.card.show(cp, "HOME");
+		}
 	}
 }

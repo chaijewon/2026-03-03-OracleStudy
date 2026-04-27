@@ -3,7 +3,9 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class UserMainFrame extends JFrame{
+public class UserMainFrame extends JFrame
+implements ActionListener
+{
     MenuPanel mp=new MenuPanel();
     ControlPanel cp;
     public UserMainFrame()
@@ -17,6 +19,8 @@ public class UserMainFrame extends JFrame{
     	
     	setSize(1024, 700);
     	setVisible(true);
+    	
+    	mp.b3.addActionListener(this);
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -25,6 +29,14 @@ public class UserMainFrame extends JFrame{
         	UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
         }catch(Exception ex) {}
         new UserMainFrame();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==mp.b3)
+		{
+			cp.card.show(cp, "JOIN");
+		}
 	}
 
 }
