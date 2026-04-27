@@ -97,6 +97,10 @@ public class MusicDAO {
 		   }
 		   return list;
 	   }
+	   // => API키 이용 => JSON
+	   // Youtube / Kakao : 지도 / 네이버 : 뉴스 , Data
+	   // AWS / 제미나이 => 
+	   // 공공데이터 / 관광공사 
 }
 
 
