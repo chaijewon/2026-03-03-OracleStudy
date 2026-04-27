@@ -127,7 +127,64 @@ public class GoodsDAO {
 	  }
 	  return total;
   }
+  /*
+   *    1. List => 조건없는 경우 / 페이지 나누기 
+   *    2. VO => SELECT 컬럼,컬럼....
+   *    3. 컬럼이 한개 => 해당 데이터형 
+   *    -----------------------------------
+   *    => pwd : 로그인 String
+   */
+  /*
+   *   NO                NOT NULL NUMBER         
+	GOODS_NAME        NOT NULL VARCHAR2(1000) 
+	GOODS_SUB                  VARCHAR2(1000) 
+	GOODS_PRICE       NOT NULL VARCHAR2(50)   
+	GOODS_DISCOUNT             NUMBER         
+	GOODS_FIRST_PRICE          VARCHAR2(20)   
+	GOODS_DELIVERY    NOT NULL VARCHAR2(20)   
+	GOODS_POSTER               VARCHAR2(260)  
+	HIT                        NUMBER 
+	1. 목록 (row가 여러개)
+	          | VO => 여러개 저장 (List)
+	2. 상세보기 => row (1개) 
+	             --------- VO한개 
+	SELECT no FROM goods=> int List<Integer> 
+	       컬럼이 두개이상 => VO 
+	
+   */
   
+  public GoodsVO goodsDetailData(int type,int gno)
+  {
+	  GoodsVO vo=new GoodsVO();
+	  try
+	  {
+		  getConnection();
+		  String sql="SELECT no,goods_name,goods_poster,goods_sub,"
+				    +"goods_delivery,goods_discount,goods_price "
+				    +"FROM "+tables[type]
+				    +" WHERE no=?";
+		  ps=conn.prepareStatement(sql);
+		  ps.setInt(1, gno);
+		  ResultSet rs=ps.executeQuery();
+		  // no => 중복이 없다 => ROW한개 출력 
+		  vo.setNo(rs.getInt(1));
+		  vo.setGoods_name(rs.getString(2));
+		  vo.setGoods_poster(rs.getString(3));
+		  vo.setGoods_sub(rs.getString(4));
+		  vo.setGoods_delivery(rs.getString(5));
+		  vo.setGoods_discount(rs.getInt(6));
+		  vo.setGoods_price(rs.getString(7));
+		  rs.close();
+	  }catch(Exception ex)
+	  {
+		  ex.printStackTrace();
+	  }
+	  finally
+	  {
+		  disConnection();
+	  }
+	  return vo;
+  }
 }
 
 

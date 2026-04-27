@@ -169,7 +169,10 @@ implements ActionListener,MouseListener
 						imgs[i].getToolTipText();
 				  gno=gno.substring(gno.indexOf("^")+1);
 				  //JOptionPane.showMessageDialog(this, "선택번호:"+gno);
+				  
 				  cp.card.show(cp, "DETAIL");
+				  // 메소드 
+				  cp.gdf.print(type, Integer.parseInt(gno));
 			  }
 		  }
 	  }
