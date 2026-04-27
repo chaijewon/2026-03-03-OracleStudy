@@ -91,7 +91,7 @@ implements ActionListener,MouseListener
 			   Image image=
 					 ImageChange.getImage(new ImageIcon(url), 250, 180);
 			   imgs[i]=new JLabel(new ImageIcon(image));
-			   imgs[i].setToolTipText(vo.getGoods_name());
+			   imgs[i].setToolTipText(vo.getGoods_name()+"^"+vo.getNo());
 			   pan.add(imgs[i]);
 			   
 			   // 이벤트 등록 => 자바스크립트 
@@ -159,7 +159,20 @@ implements ActionListener,MouseListener
    @Override
    public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
-	
+	  for(int i=0;i<imgs.length;i++)
+	  {
+		  if(e.getSource()==imgs[i])
+		  {
+			  if(e.getClickCount()==2)// 더블 클릭 
+			  {
+				  String gno=
+						imgs[i].getToolTipText();
+				  gno=gno.substring(gno.indexOf("^")+1);
+				  //JOptionPane.showMessageDialog(this, "선택번호:"+gno);
+				  cp.card.show(cp, "DETAIL");
+			  }
+		  }
+	  }
    }
    @Override
    public void mousePressed(MouseEvent e) {

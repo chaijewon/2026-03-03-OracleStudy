@@ -10,13 +10,15 @@ public class ControlPanel extends JPanel{
 	
 	// 1. HOME 
 	HomePanel hp;
+	GoodsDetailForm gdf;
 	CardLayout card=new CardLayout();
     public ControlPanel()
     {
     	setBackground(Color.cyan);
     	setLayout(card);
     	hp=new HomePanel(this);
-    	
+    	gdf=new GoodsDetailForm(this);
     	add("HOME",hp);
+    	add("DETAIL",gdf);
     }
 }
