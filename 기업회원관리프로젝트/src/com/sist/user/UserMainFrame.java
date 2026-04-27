@@ -5,9 +5,10 @@ import java.awt.event.*;
 import javax.swing.*;
 public class UserMainFrame extends JFrame{
     MenuPanel mp=new MenuPanel();
-    ControlPanel cp=new ControlPanel();
+    ControlPanel cp;
     public UserMainFrame()
     {
+    	cp=new ControlPanel(this);
     	setLayout(null);
     	mp.setBounds(250, 15, 700, 45);
     	cp.setBounds(10,70, 980, 580);

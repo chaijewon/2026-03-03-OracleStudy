@@ -62,7 +62,7 @@ public class GoodsDAO {
 		  // 2. SQL문장 
 		  String sql="SELECT no,goods_poster,goods_name,goods_price "
 				    +"FROM "+tables[type] 
-				    +"ORDER BY no ASC "
+				    +" ORDER BY no ASC "
 				    +"OFFSET ? ROWS FETCH NEXT 12 ROWS ONLY";
 		            // 12c => 페이지 나누기 => 인라인뷰 
 		  // 3. 전송 
