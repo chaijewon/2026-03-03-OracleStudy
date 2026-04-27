@@ -8,7 +8,7 @@ public class UserMainFrame extends JFrame{
     ControlPanel cp;
     public UserMainFrame()
     {
-    	cp=new ControlPanel(this);
+    	cp=new ControlPanel();
     	setLayout(null);
     	mp.setBounds(250, 15, 700, 45);
     	cp.setBounds(10,70, 980, 580);
