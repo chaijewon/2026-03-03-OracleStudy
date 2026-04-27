@@ -19,7 +19,6 @@ implements ActionListener
     	
     	setSize(1024, 700);
     	setVisible(true);
-    	
     	mp.b3.addActionListener(this);
     }
 	public static void main(String[] args) {
