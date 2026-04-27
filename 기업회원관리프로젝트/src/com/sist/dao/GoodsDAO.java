@@ -167,6 +167,7 @@ public class GoodsDAO {
 		  ps.setInt(1, gno);
 		  ResultSet rs=ps.executeQuery();
 		  // no => 중복이 없다 => ROW한개 출력 
+		  rs.next();
 		  vo.setNo(rs.getInt(1));
 		  vo.setGoods_name(rs.getString(2));
 		  vo.setGoods_poster(rs.getString(3));

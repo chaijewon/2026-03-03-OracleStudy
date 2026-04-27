@@ -1,12 +1,16 @@
 package com.sist.user;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
+import java.net.URL;
 
 import javax.swing.*;
 import javax.swing.JPanel;
 
+import com.sist.commons.ImageChange;
 import com.sist.dao.GoodsDAO;
 import com.sist.vo.GoodsVO;
 
@@ -29,10 +33,13 @@ implements ActionListener
     	 this.cp=cp;
     	 setLayout(null);
     	 poster=new JLabel("");
-         poster.setBounds(20, 20, 300, 500);
+         poster.setBounds(20, 20, 300, 200);
          add(poster);
         	 
          nameLa=new JLabel("상품명");
+         nameLa.setBackground(Color.gray);
+         nameLa.setOpaque(true);
+         
          name=new JLabel();
          nameLa.setBounds(330, 20, 80, 30);
          name.setBounds(415, 20, 250, 30);
@@ -43,7 +50,9 @@ implements ActionListener
          add(sub);
          priceLa=new JLabel("가격");
          price=new JLabel();
-        	 
+         priceLa.setBackground(Color.gray);
+         priceLa.setOpaque(true);
+         
          priceLa.setBounds(330, 90, 80, 30);
          price.setBounds(415, 90, 350, 30);
          add(priceLa);add(price);
@@ -54,10 +63,16 @@ implements ActionListener
          discountLa.setBounds(330, 125, 80, 30);
          discount.setBounds(415, 125, 250, 30);
          add(discountLa);add(discount);
-        	 
+        
+         discountLa.setBackground(Color.gray);
+         discountLa.setOpaque(true);// 불투명 모드 
+         
          deliveryLa=new JLabel("배송");
          delivery=new JLabel();
-        	 
+        
+         deliveryLa.setBackground(Color.gray);
+         deliveryLa.setOpaque(true);
+         
          deliveryLa.setBounds(330, 160, 80, 30);
          delivery.setBounds(415, 160, 250, 30);
          add(deliveryLa);add(delivery);
@@ -80,8 +95,23 @@ implements ActionListener
     {
     	this.type=type;
     	this.gno=gno;
-    	//GoodsVO vo=dao.goodsDetailData(type, gno);
+    	GoodsVO vo=dao.goodsDetailData(type, gno);
     	// 데이터 주입 
+    	name.setText(vo.getGoods_name());
+    	sub.setText(vo.getGoods_sub());
+    	price.setText(vo.getGoods_price());
+    	discount.setText(
+    			String.valueOf(vo.getGoods_discount()));
+    	delivery.setText(vo.getGoods_delivery());
+    	try
+    	{
+    		URI uri=new URI(vo.getGoods_poster());
+    		URL url=uri.toURL();
+    		Image img=
+    		  ImageChange.getImage(new ImageIcon(url),
+    				   300, 200);
+    		poster.setIcon(new ImageIcon(img));
+    	}catch(Exception ex) {}
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
