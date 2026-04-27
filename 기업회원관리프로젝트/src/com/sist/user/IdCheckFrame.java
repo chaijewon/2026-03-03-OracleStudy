@@ -1,4 +1,4 @@
-package com.sist.client;
+package com.sist.user;
 import java.awt.*;
 import javax.swing.*;
 public class IdCheckFrame extends JFrame{
