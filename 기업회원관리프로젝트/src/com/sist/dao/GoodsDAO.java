@@ -103,7 +103,30 @@ public class GoodsDAO {
 	  }
 	  return list;
   }
-  
+  // 총페이지 
+  public int goodsTotalPage(int type)
+  {
+	  int total=0;
+	  try
+	  {
+		  getConnection();
+		  String sql="SELECT CEIL(COUNT(*)/12.0) "
+				    +"FROM "+tables[type];
+		  ps=conn.prepareStatement(sql);
+		  ResultSet rs=ps.executeQuery();
+		  rs.next();
+		  total=rs.getInt(1);
+		  rs.close();
+	  }catch(Exception ex)
+	  {
+		  ex.printStackTrace();
+	  }
+	  finally
+	  {
+		  disConnection();
+	  }
+	  return total;
+  }
   
 }
 

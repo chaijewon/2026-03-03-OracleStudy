@@ -51,6 +51,13 @@ implements ActionListener
 	   b2.addActionListener(this);
 	   b3.addActionListener(this);
 	   b4.addActionListener(this);
+	   
+	   b5=new JButton("이전");
+	   b6=new JButton("다음");
+	   JPanel pp=new JPanel();
+	   pp.add(b5);pp.add(la);pp.add(b6);
+	   pp.setBounds(10, 550, 920, 35);
+	   add(pp);
    }
    public void init()
    {
@@ -66,7 +73,9 @@ implements ActionListener
    public void print()
    {
 	   List<GoodsVO> list=dao.goodsListData(type, curpage);
-	   //pan.setLayout(new GridLayout(3,4,8,8));
+	   
+	   totalpage=dao.goodsTotalPage(type);
+	   
 	   for(int i=0;i<list.size();i++)
 	   {
 		   GoodsVO vo=list.get(i);
@@ -83,6 +92,7 @@ implements ActionListener
 			   pan.add(imgs[i]);
 		   }catch(Exception ex) {}
 	   }
+	   la.setText(curpage+" page / "+totalpage+" pages");
    }
    @Override
    public void actionPerformed(ActionEvent e) {
