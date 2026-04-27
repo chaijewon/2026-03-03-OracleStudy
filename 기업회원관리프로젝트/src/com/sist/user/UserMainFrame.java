@@ -8,6 +8,7 @@ implements ActionListener
 {
     MenuPanel mp=new MenuPanel();
     ControlPanel cp;
+    
     public UserMainFrame()
     {
     	cp=new ControlPanel();

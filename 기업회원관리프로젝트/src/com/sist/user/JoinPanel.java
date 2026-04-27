@@ -2,7 +2,10 @@ package com.sist.user;
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
-public class JoinPanel extends JPanel{
+import java.awt.event.*;
+public class JoinPanel extends JPanel
+implements ActionListener
+{
     JLabel tLa,iLa,pLa1,nLa,sLa,pLa,aLa1,aLa2,telLa,cLa;
     JTextField idtf,nametf,posttf,addrtf1,addrtf2,teltf;
     JTextArea cta;
@@ -11,6 +14,8 @@ public class JoinPanel extends JPanel{
     JComboBox box;
     JPasswordField pf;
     ControlPanel cp;
+    IdCheckFrame idf=new IdCheckFrame();
+    PostFindFrame post=new PostFindFrame();
     public JoinPanel(ControlPanel cp)
     {
     	this.cp=cp;
@@ -130,5 +135,29 @@ public class JoinPanel extends JPanel{
     	add(p);
     	
     	setSize(960, 600);
+    	b1.addActionListener(this);
+    	b2.addActionListener(this);
+    	b3.addActionListener(this);
+    	b4.addActionListener(this);
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==b4)
+		{
+			cp.card.show(cp, "HOME");
+		}
+		else if(e.getSource()==b1)
+		{
+			idf.tf.setText("");
+			idf.tf.requestFocus();
+			idf.setVisible(true);
+			
+		}
+		else if(e.getSource()==b2)
+		{
+			post.setVisible(true);
+		}
+			
+	}
 }
