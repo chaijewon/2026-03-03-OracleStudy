@@ -139,6 +139,12 @@ implements ActionListener
     	b2.addActionListener(this);
     	b3.addActionListener(this);
     	b4.addActionListener(this);
+    	
+    	// 우편번호 , 아이디 중복 
+    	post.b1.addActionListener(this);
+    	post.tf.addActionListener(this);
+    	post.b2.addActionListener(this);
+    	// CRUD 
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -156,7 +162,25 @@ implements ActionListener
 		}
 		else if(e.getSource()==b2)
 		{
+			for(int i=post.model.getRowCount()-1;i>=0;i--)
+			{
+				post.model.removeRow(i);
+			}
+			post.tf.setText("");
 			post.setVisible(true);
+			
+		}
+		// 우편번호 검색 
+		else if(e.getSource()==post.b1||
+				e.getSource()==post.tf)
+		{
+			// Like => Regexp_like =>  index가 적용이 안될 수 있다
+			// 1. %가 앞에 있으면 안됨 
+			// 2. 제어 => 함수 
+		}
+		else if(e.getSource()==post.b2)
+		{
+			post.setVisible(false);// hide / show 
 		}
 			
 	}
