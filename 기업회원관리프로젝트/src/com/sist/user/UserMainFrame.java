@@ -8,7 +8,8 @@ implements ActionListener
 {
     MenuPanel mp=new MenuPanel();
     ControlPanel cp;
-    
+    static boolean bLogin=false;
+    static char isAdmin='n';
     public UserMainFrame()
     {
     	cp=new ControlPanel();

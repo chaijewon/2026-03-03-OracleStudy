@@ -15,10 +15,13 @@ public class MenuPanel extends JPanel{
 	   
 	   setLayout(new GridLayout(1,6,5,5));
 	   add(b1);
-	   add(b2);
-	   add(b3);
-	   add(b4);
-	   add(b5);
+	   if(!UserMainFrame.bLogin)
+	    add(b2);
+	    add(b3);
+	   if(UserMainFrame.isAdmin=='n')
+	      add(b4);
+	   else
+	      add(b5);
 	   add(b6);
    }
 }

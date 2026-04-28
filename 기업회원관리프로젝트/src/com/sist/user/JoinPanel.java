@@ -166,9 +166,13 @@ implements ActionListener,MouseListener
 		}
 		else if(e.getSource()==b1)
 		{
+			// 초기화 => new사용하지 않는다 => hide/show
+			// web => new 
 			idf.tf.setText("");
 			idf.tf.requestFocus();
 			idf.setVisible(true);
+			idf.la3.setText("");
+			idf.b2.setVisible(false);
 			
 		}
 		else if(e.getSource()==b2)
@@ -234,12 +238,32 @@ implements ActionListener,MouseListener
 				idf.la3.setText("아이디를 입력하세요");
 				return;
 			}
-			
-			
+			// 데이터베이스 연동 
+			int count=dao.memberIdCheck(id);
+			if(count==0)
+			{
+				idf.la3.setText("사용가능한 아이디입니다");
+				idf.b2.setVisible(true);
+				
+			}
+			else
+			{
+				idf.la3.setText("이미 사용중인 아이디입니다");
+				idf.tf.setText("");
+				idf.tf.requestFocus();
+			}
 		}
 		else if(e.getSource()==idf.b2)
 		{
-			
+			String id=idf.tf.getText();
+			idtf.setText(id);
+			idf.setVisible(false);
+		}
+		// 회원가입 
+		// 취소
+		else if(e.getSource()==b4)
+		{
+			cp.card.show(cp, "HOME");
 		}
 			
 	}
