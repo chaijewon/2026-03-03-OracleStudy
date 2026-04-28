@@ -33,6 +33,6 @@ public class Login extends JFrame{
         add(p);
         
         setBounds(400,300,330, 170);
-        setVisible(true);// 화면 출력
+        //setVisible(true);// 화면 출력
     }
 }

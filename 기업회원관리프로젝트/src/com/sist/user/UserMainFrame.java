@@ -10,6 +10,7 @@ implements ActionListener
     ControlPanel cp;
     static boolean bLogin=false;
     static char isAdmin='n';
+    Login login=new Login();
     public UserMainFrame()
     {
     	cp=new ControlPanel();
@@ -22,6 +23,12 @@ implements ActionListener
     	setSize(1024, 700);
     	setVisible(true);
     	mp.b3.addActionListener(this);
+    	mp.b2.addActionListener(this);
+    	mp.b1.addActionListener(this);
+    	
+    	// login
+    	login.b1.addActionListener(this);// 로그인 
+    	login.b2.addActionListener(this);// 취소 
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -38,6 +45,26 @@ implements ActionListener
 		{
 			cp.card.show(cp, "JOIN");
 		}
+		else if(e.getSource()==mp.b1)
+		{
+			cp.card.show(cp, "HOME");
+		}
+		else if(e.getSource()==mp.b2)
+		{
+			login.tf.setText("");
+			login.pf.setText("");
+			login.setVisible(true);
+		}
+		// 로그인 
+		else if(e.getSource()==login.b2)
+		{
+			login.setVisible(false);
+		}
+		else if(e.getSource()==login.b1)
+		{
+			
+		}
+		
 	}
 
 }
