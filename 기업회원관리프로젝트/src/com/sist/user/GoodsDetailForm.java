@@ -83,6 +83,7 @@ implements ActionListener
          box.addItem(4);
          box.addItem(5);
          b1=new JButton("구매");
+         b1.setEnabled(false);
          b2=new JButton("목록");
         	 
         	 
@@ -114,6 +115,8 @@ implements ActionListener
     				   300, 200);
     		poster.setIcon(new ImageIcon(img));
     	}catch(Exception ex) {}
+    	
+    	b1.setEnabled(UserMainFrame.bLogin);
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {

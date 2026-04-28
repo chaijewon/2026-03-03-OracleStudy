@@ -205,9 +205,10 @@ public class MemberDAO {
 	   *   로그인 경우  
 	   *   
 	   */
-	  public String isLogin(String id,String pwd)
+	  public MemberVO isLogin(String id,String pwd)
 	  {
-		  String result="";
+		  
+		  MemberVO vo=new MemberVO();
 		  try
 		  {
 			  getConnection();
@@ -224,26 +225,30 @@ public class MemberDAO {
 			  
 			  if(count==0) // ID가 없는 상태
 			  {
-				  result="NOID";
+				  vo.setMsg("NOID");
 			  }
 			  else // ID가 존재 
 			  {
-				  sql="SELECT pwd FROM member "
+				  sql="SELECT pwd,id,isadmin FROM member "
 					 +"WHERE id=?";
 				  ps=conn.prepareStatement(sql);
 				  ps.setString(1, id);
 				  rs=ps.executeQuery();
 				  rs.next();
 				  String db_pwd=rs.getString(1);
+				  String db_id=rs.getString(2);
+				  String isadmin=rs.getString(3);
 				  rs.close();
 				  
 				  if(db_pwd.equals(pwd)) // Login
 				  {
-					  result="OK";
+					  vo.setMsg("OK");
+					  vo.setIsadmin(isadmin);
+					  vo.setId(db_id);
 				  }
 				  else
 				  {
-					  result="NOPWD";
+					  vo.setMsg("NOPWD");
 				  }
 				  // 웹에서 동일 
 			  }
@@ -255,7 +260,7 @@ public class MemberDAO {
 		  {
 			  disConnection();
 		  }
-		  return result;
+		  return vo;
 	  }
 	  // => 메인 출력 
 }
