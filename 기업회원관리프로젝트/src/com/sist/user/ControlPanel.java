@@ -13,6 +13,7 @@ public class ControlPanel extends JPanel{
 	GoodsDetailForm gdf;
 	JoinPanel jp;
 	CardLayout card=new CardLayout();
+	String myId;
     public ControlPanel()
     {
     	setBackground(Color.cyan);

@@ -12,6 +12,13 @@ package com.sist.vo;
  ISADMIN                                            CHAR(1)
  REGDATE                                            DATE
  */
-public class MemberVO {
 
+import java.util.Date;
+
+import lombok.Data;
+@Data
+public class MemberVO {
+   private String id,pwd,sex,name,post,addr1,addr2,
+           phone,content,isadmin,dbday;
+   private Date regdate;
 }

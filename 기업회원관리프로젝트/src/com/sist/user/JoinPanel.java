@@ -260,6 +260,51 @@ implements ActionListener,MouseListener
 			idf.setVisible(false);
 		}
 		// 회원가입 
+		else if(e.getSource()==b3)
+		{
+			String id=idtf.getText();
+			String pwd=String.valueOf(pf.getPassword());
+			String name=nametf.getText();
+			String sex="남자";
+			if(rb1.isSelected())
+				sex="남자";
+			else
+				sex="여자";
+			String post=posttf.getText();
+			String addr1=addrtf1.getText();
+			String addr2=addrtf2.getText();
+			String phone=teltf.getText();
+			String content=cta.getText();
+			
+			MemberVO vo=new MemberVO();
+			vo.setId(id);
+			vo.setPwd(pwd);
+			vo.setName(name);
+			vo.setSex(sex);
+			vo.setPost(post);
+			vo.setAddr1(addr1);
+			vo.setAddr2(addr2);
+			vo.setPhone(phone);
+			vo.setContent(content);
+			
+			// 데이터베이스 연동 
+			int check=dao.memberJoin(vo);
+			// => executeUpdate() 
+			// => 변경 갯수 (1 => 추가 / 변경 / 삭제)
+			// => 0이면 변경된 데이터가 없다 
+			if(check>0) // 정상적으로 추가 
+			{
+				JOptionPane.showMessageDialog(this, 
+						"🎉 회원 가입을 축하합니다 🎉");
+				cp.card.show(cp, "HOME");
+			}
+			else // 실패 
+			{
+				JOptionPane.showMessageDialog(this, 
+						"회원 가입에 실패하셨습니다\n다시 가입하세요");
+			}
+			
+		}
 		// 취소
 		else if(e.getSource()==b4)
 		{
