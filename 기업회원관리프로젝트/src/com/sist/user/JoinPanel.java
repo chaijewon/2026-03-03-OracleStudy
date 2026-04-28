@@ -98,6 +98,7 @@ implements ActionListener,MouseListener
     	add(aLa1);
     	
     	addrtf1=new JTextField();
+    	addrtf1.setEnabled(false);
     	addrtf1.setBounds(265, 255, 450, 30);
     	add(addrtf1);
     	
