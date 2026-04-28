@@ -119,4 +119,37 @@ public class MemberDAO {
 		  }
 		  return count;
 	  }
+	  // 아이디 중복 
+	  public int memberIdCheck(String id)
+	  {
+		  int count=0;
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT COUNT(*) "
+					    +"FROM member "
+					    +"WHERE id=?";
+			  // 0 , 1 
+			  ps=conn.prepareStatement(sql);
+			  // ?에 값을 채운다 
+			  ps.setString(1, id);
+			  // 결과값 
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  count=rs.getInt(1);
+			  rs.close();
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return count;
+	  }
+	  // 회원 가입 
+	  // 로그인 => Admin  : 관리자 / user : 마이페이지 
+	  // => 메인 출력 
 }

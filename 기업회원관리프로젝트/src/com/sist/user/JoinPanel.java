@@ -153,6 +153,9 @@ implements ActionListener,MouseListener
     	post.b2.addActionListener(this);
     	post.table.addMouseListener(this);
     	// CRUD 
+    	// id 중복 체크 
+    	idf.b1.addActionListener(this);// 중복 체크
+    	idf.b2.addActionListener(this);// 확인 
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -220,6 +223,23 @@ implements ActionListener,MouseListener
 		else if(e.getSource()==post.b2)
 		{
 			post.setVisible(false);// hide / show 
+		}
+		else if(e.getSource()==idf.b1)
+		{
+			// 입력값 읽기
+			String id=idf.tf.getText();
+			if(id.trim().length()<1)
+			{
+				idf.tf.requestFocus();
+				idf.la3.setText("아이디를 입력하세요");
+				return;
+			}
+			
+			
+		}
+		else if(e.getSource()==idf.b2)
+		{
+			
 		}
 			
 	}
