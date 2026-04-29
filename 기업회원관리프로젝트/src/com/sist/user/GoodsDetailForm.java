@@ -92,6 +92,8 @@ implements ActionListener
          p.setBounds(330, 200, 435, 35);
          add(p);
          
+         
+         
          b2.addActionListener(this);
     }
     public void print(int type,int gno)

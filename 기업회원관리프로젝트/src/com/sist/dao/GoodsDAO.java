@@ -2,6 +2,7 @@ package com.sist.dao;
 import java.sql.*;
 import java.util.*;
 
+import com.sist.vo.BuyVO;
 import com.sist.vo.GoodsVO;
 public class GoodsDAO {
   // 전체적으로 사용 
@@ -185,6 +186,39 @@ public class GoodsDAO {
 		  disConnection();
 	  }
 	  return vo;
+  }
+  // 구매
+  /*
+   *  NO                                        NOT NULL NUMBER
+    ID                                                 VARCHAR2(20)
+    TYPE                                      NOT NULL NUMBER
+    GNO                                       NOT NULL NUMBER
+    ACCOUNT                                            NUMBER
+    PRICE                                              NUMBER
+    REGDATE
+   */
+  public void goodsBuyData(BuyVO vo)
+  {
+	  try
+	  {
+		  getConnection();
+		  String sql="INSERT INTO buy VALUES("
+				    +"buy_no_seq.nextval,?,?,?,?,?,SYSDATE)";
+		  ps=conn.prepareStatement(sql);
+		  ps.setString(1, vo.getId());
+		  ps.setInt(2, vo.getType());
+		  ps.setInt(3, vo.getGno());
+		  ps.setInt(4, vo.getAccount());
+		  ps.setInt(5, vo.getPrice());
+		  ps.executeUpdate();
+	  }catch(Exception ex)
+	  {
+		  ex.printStackTrace();
+	  }
+	  finally
+	  {
+		  disConnection();
+	  }
   }
 }
 
