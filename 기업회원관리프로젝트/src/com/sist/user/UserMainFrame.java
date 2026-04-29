@@ -107,6 +107,7 @@ implements ActionListener
 				setTitle(title);
 				UserMainFrame.bLogin=true;
 				UserMainFrame.isAdmin=vo.getIsadmin().charAt(0);
+				cp.myId=vo.getId();
 				mp.init();
 				login.setVisible(false);
 			}
