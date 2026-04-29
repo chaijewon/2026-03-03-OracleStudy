@@ -70,6 +70,8 @@ public class MyPageForm extends JPanel{
 	    *   
 	    */
 	   table=new JTable(model); 
+	   table.getTableHeader().setReorderingAllowed(false);
+	   table.setRowHeight(35);
 	   JScrollPane js=new JScrollPane(table);
 	   setLayout(null);
 	   btn.setBounds(50, 15, 100, 30);
