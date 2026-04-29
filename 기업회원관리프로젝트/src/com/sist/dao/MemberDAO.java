@@ -11,7 +11,7 @@ import java.util.*;
  */
 import com.sist.vo.*;
 public class MemberDAO {
-	// 전체적으로 사용 
+	  // 전체적으로 사용 
 	  private Connection conn; // Socket => 연결 담당 
 	  private PreparedStatement ps; // BufferedReader , OutputStream 
 	  // 송(SQL문장) 수신(오라클에서 결과값 받기)
@@ -263,4 +263,89 @@ public class MemberDAO {
 		  return vo;
 	  }
 	  // => 메인 출력 
+	  public List<MemberVO> memberListData()
+	  {
+		  List<MemberVO> list=
+				  new ArrayList<MemberVO>();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT m.id,name,sex,addr1,phone,grade "
+					    +"FROM member m JOIN grades g "
+					    +"ON m.id=g.id";
+			  ps=conn.prepareStatement(sql);
+			  ResultSet rs=ps.executeQuery();
+			  while(rs.next())
+			  {
+				  MemberVO vo=
+						  new MemberVO();
+				  vo.setId(rs.getString(1));
+				  vo.setName(rs.getString(2));
+				  vo.setSex(rs.getString(3));
+				  vo.setAddr1(rs.getString(4));
+				  vo.setPhone(rs.getString(5));
+				  vo.setGrade(rs.getString(6));
+				  list.add(vo);
+			  }
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return list;
+	  }
+	  public List<String> memberGetId()
+	  {
+		  List<String> list=
+				  new ArrayList<String>();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT id "
+					    +"FROM member";
+			  // 0 , 1 
+			  ps=conn.prepareStatement(sql);
+			  
+			  ResultSet rs=ps.executeQuery();
+			  while(rs.next())
+			  {
+				  list.add(rs.getString(1));
+			  }
+			  rs.close();
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return list;
+	  }
+	  public void gradeInsert(String id,String grade)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="INSERT INTO grades "
+					    +"VALUES(?,?)";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, id);
+			  ps.setString(2, grade);
+			  ps.executeUpdate();
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
 }
