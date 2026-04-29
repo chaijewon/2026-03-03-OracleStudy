@@ -270,6 +270,24 @@ public class GoodsDAO {
 	  return list;
   }
   
+  public void buyDelete(int no)
+  {
+	  try
+	  {
+		  getConnection();
+		  String sql="DELETE FROM buy "
+				    +"WHERE no="+no;
+		  ps=conn.prepareStatement(sql);
+		  ps.executeUpdate();
+	  }catch(Exception ex)
+	  {
+		  ex.printStackTrace();
+	  }
+	  finally
+	  {
+		  disConnection();
+	  }
+  }
   
 }
 

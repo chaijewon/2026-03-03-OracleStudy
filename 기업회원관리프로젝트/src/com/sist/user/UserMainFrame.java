@@ -111,6 +111,10 @@ implements ActionListener
 				cp.myId=vo.getId();
 				mp.init();
 				login.setVisible(false);
+				if(vo.getIsadmin().equals("y"))
+				{
+					cp.card.show(cp, "ADMIN");
+				}
 			}
 		}
 		else if(e.getSource()==mp.b6)

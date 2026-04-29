@@ -11,7 +11,9 @@ import java.net.URL;
 
 import javax.swing.*;
 import javax.swing.table.*;
-public class MyPageForm extends JPanel{
+public class MyPageForm extends JPanel
+implements ActionListener,MouseListener
+{
    JTable table;
    DefaultTableModel model;
    JButton btn;
@@ -78,6 +80,9 @@ public class MyPageForm extends JPanel{
 	   js.setBounds(50, 50, 800, 450);
 	   add(btn);
 	   add(js);
+	   
+	   btn.addActionListener(this);
+	   table.addMouseListener(this);
    }
    public void print()
    {
@@ -109,6 +114,57 @@ public class MyPageForm extends JPanel{
 			   model.addRow(data);
 		   }catch(Exception ex) {}
 	   }
+   }
+   @Override
+   public void mouseClicked(MouseEvent e) {
+	// TODO Auto-generated method stub
+	  if(e.getSource()==table)
+	  {
+		  if(e.getClickCount()==2)
+		  {
+			  int row=table.getSelectedRow();
+			  String no=model.getValueAt(row,0).toString();
+			  //JOptionPane.showMessageDialog(this, "선택된 번호:"+no);
+			  int a=JOptionPane.showConfirmDialog(this,"취소할까요?","취소",
+					    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			  if(a==JOptionPane.YES_OPTION)
+			  {
+				  // 데이터 연동 
+				  dao.buyDelete(Integer.parseInt(no));
+				  print();
+			  }
+					 
+					  
+		  }
+	  }
+   }
+   @Override
+   public void mousePressed(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseReleased(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseEntered(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseExited(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	  if(e.getSource()==btn)
+	  {
+		  cp.card.show(cp, "HOME");
+	  }
    }
    
 }
