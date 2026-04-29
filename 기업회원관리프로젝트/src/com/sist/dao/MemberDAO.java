@@ -272,7 +272,8 @@ public class MemberDAO {
 			  getConnection();
 			  String sql="SELECT m.id,name,sex,addr1,phone,grade "
 					    +"FROM member m JOIN grades g "
-					    +"ON m.id=g.id";
+					    +"ON m.id=g.id "
+					    +"AND m.isadmin<>'y'";
 			  ps=conn.prepareStatement(sql);
 			  ResultSet rs=ps.executeQuery();
 			  while(rs.next())
@@ -348,4 +349,27 @@ public class MemberDAO {
 			  disConnection();
 		  }
 	  }
+	  
+	  public void gradeUpdate(String id,String grade)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="UPDATE grades SET "
+					    +"grade=? "
+					    +"WHERE id=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, grade);
+			  ps.setString(2, id);
+			  ps.executeUpdate();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
+	  
 }
