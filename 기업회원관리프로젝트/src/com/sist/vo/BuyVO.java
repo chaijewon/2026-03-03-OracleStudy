@@ -11,9 +11,11 @@ package com.sist.vo;
 import java.util.*;
 
 import lombok.Data;
+// 장바구니 / 예약 
 @Data
 public class BuyVO {
    private int no,type,gno,account,price;
-   private String id;
+   private String id,dbday;
    private Date regdate;
+   private GoodsVO gvo=new GoodsVO();
 }

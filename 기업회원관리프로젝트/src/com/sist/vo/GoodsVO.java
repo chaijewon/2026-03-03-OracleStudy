@@ -12,6 +12,7 @@ import lombok.Data;
 	GOODS_DELIVERY    NOT NULL VARCHAR2(20)   
 	GOODS_POSTER               VARCHAR2(260)  
 	HIT                        NUMBER 
+	List<GoodsVO>
  */
 @Data
 public class GoodsVO {
@@ -19,4 +20,5 @@ public class GoodsVO {
   private String goods_name,goods_sub,goods_price,
           goods_first_price,goods_delivery,goods_poster;
   
+  // 조인 처리 => 클래스를 포함한다 
 }

@@ -150,6 +150,8 @@ implements ActionListener
 			dao.goodsBuyData(vo);
 			JOptionPane.showMessageDialog(this, 
 					"구매되었습니다!!");
+			cp.card.show(cp, "MYPAGE");
+			cp.mf.print();
 		}
 	}
 }

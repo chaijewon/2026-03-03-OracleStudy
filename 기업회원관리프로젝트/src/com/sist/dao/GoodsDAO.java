@@ -220,6 +220,57 @@ public class GoodsDAO {
 		  disConnection();
 	  }
   }
+  // 조인 
+  /*
+   *    고객  <구매>  도서
+   *          | id , 도서번호
+   *          aaa 1 1  
+   *    = INNER (EQUI_JOIN) => INTERSECT (교집합)
+   *    = OUTER => LEFT/RIGHT => INTERSECT + MINUS
+   */
+  public List<BuyVO> buyListData(String id)
+  {
+	  List<BuyVO> list=new ArrayList<BuyVO>();
+	  try
+	  {
+		  getConnection();
+		  String sql="SELECT b.no,goods_poster,goods_name,account,"
+				+ "TO_CHAR(regdate,'YYYY-MM-DD'),price "
+		  		+ "FROM buy b JOIN goods_all g "
+		  		+ "ON b.gno=g.no "
+		  		+ "AND b.id=? "
+		  		+ "ORDER BY regdate DESC";
+		  // 본인만 
+		  ps=conn.prepareStatement(sql);
+		  // ?에 값을 채운다 
+		  ps.setString(1, id);
+		  // 실행 
+		  ResultSet rs=ps.executeQuery();
+		  // 조인시 처리하는 방법 
+		  while(rs.next())
+		  {
+			  BuyVO vo=new BuyVO();
+			  vo.setNo(rs.getInt(1));
+			  vo.getGvo().setGoods_poster(rs.getString(2));
+			  vo.getGvo().setGoods_name(rs.getString(3));
+			  vo.setAccount(rs.getInt(4));
+			  vo.setDbday(rs.getString(5));
+			  vo.setPrice(rs.getInt(6));
+			  list.add(vo);
+		  }
+		  rs.close();
+	  }catch(Exception ex)
+	  {
+		  ex.printStackTrace();
+	  }
+	  finally
+	  {
+		  disConnection();
+	  }
+	  return list;
+  }
+  
+  
 }
 
 
