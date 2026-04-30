@@ -15,6 +15,11 @@ public class SawonControlForm extends JPanel{
     	 tp.addTab("급여관리",new JPanel());
     	 tp.addTab("부서관리",new JPanel());
     	 tp.addTab("인사관리",new JPanel());
+//    	 tp.setEnabledAt(0, false);
+//    	 tp.setEnabledAt(2, true);
+//    	 tp.setEnabledAt(3, false);
+//    	 tp.setEnabledAt(4, false);
+//    	 tp.setEnabledAt(5, false);
     	 add("Center",tp);
      }
     

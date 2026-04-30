@@ -22,7 +22,7 @@ import lombok.Data;
 @Data
 public class EmpVO {
   private int empno,sal,detpno;
-  private String ename,job,dbday,isadmin;
+  private String ename,job,dbday,isadmin,msg;
   private Date hiredate;
   private DeptVO dvo=new DeptVO();
 }

@@ -181,7 +181,65 @@ public class EmpDAO {
 		  return list;
 	  }
 	  // 로그인 
-	  
+	  public EmpVO isLogin(int empno,String ename)
+	  {
+		  EmpVO vo=new EmpVO();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT COUNT(*) "
+					    +"FROM emp2 "
+					    +"WHERE empno=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, empno);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  int count=rs.getInt(1);
+			  rs.close();
+			  //// 사번 존재여부 확인 
+			  if(count==0)
+			  {
+				  vo.setMsg("NOSABUN");
+			  }
+			  else
+			  {
+				  // 이름 검색 
+				  sql="SELECT ename,isadmin,empno "
+					 +"FROM emp2 "
+					 +"WHERE empno=?";
+				  ps=conn.prepareStatement(sql);
+				  ps.setInt(1, empno);
+				  rs=ps.executeQuery();
+				  rs.next();
+				  String db_name=rs.getString(1);
+				  String isadmin=rs.getString(2);
+				  int no=rs.getInt(3);
+				  rs.close();
+				  
+				  if(ename.equals(db_name))
+				  {
+					  vo.setMsg("OK");
+					  vo.setEmpno(no);
+					  vo.setEname(db_name);
+					  vo.setIsadmin(isadmin);
+				  }
+				  else
+				  {
+					  vo.setMsg("NONAME");
+				  }
+				  
+			  }
+			  
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return vo;
+	  }
 	  //3. 부서 이동 => Combo
 	  //4. 출퇴근 관리 => 출근 / 퇴근 => 통계 
 	  //5. 급여 
