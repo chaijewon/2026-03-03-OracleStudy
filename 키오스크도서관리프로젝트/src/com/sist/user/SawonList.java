@@ -7,7 +7,9 @@ import javax.swing.*;
 import javax.swing.table.*;
 import com.sist.dao.*;
 import com.sist.vo.*;
-public class SawonList extends JPanel{
+public class SawonList extends JPanel
+implements ActionListener
+{
    JTable table;
    DefaultTableModel model;
    JButton b1,b2,b3;
@@ -49,6 +51,9 @@ public class SawonList extends JPanel{
 	   add("South",pp);
 	   print();
 	   
+	   b4.addActionListener(this);
+	   b5.addActionListener(this);
+	   
    }
    // 현재 페이지 / 총페이지 => 변경 => 메모리 유지 
    public void print()
@@ -76,5 +81,25 @@ public class SawonList extends JPanel{
 	   // 페이지
 	   la.setText(curpage+" page / "+totalpage+" pages");
 	   
+   }
+   @Override
+   public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	  if(e.getSource()==b4)
+	  {
+		  if(curpage>1)
+		  {
+			  curpage--;
+			  print();
+		  }
+	  }
+	  else if(e.getSource()==b5)
+	  {
+		  if(curpage<totalpage)
+		  {
+			  curpage++;
+			  print();
+		  }
+	  }
    }
 }
