@@ -7,8 +7,14 @@ import javax.swing.*;
 import javax.swing.table.*;
 import com.sist.dao.*;
 import com.sist.vo.*;
+/*
+ *    ActionListener : button/menu/textfield
+ *    ItemListener : combo / List
+ *    MouseListener : table / tree
+ *    KeyListener => JFrame / JPanel 
+ */
 public class SawonFind extends JPanel
-implements ActionListener
+implements ItemListener
 {
    JTable table;
    DefaultTableModel model;
@@ -46,7 +52,7 @@ implements ActionListener
 	   }
 	   print();
 	   
-	   
+	   box.addItemListener(this);
    }
    // 현재 페이지 / 총페이지 => 변경 => 메모리 유지 
    public void print()
@@ -71,14 +77,17 @@ implements ActionListener
 		   };
 		   model.addRow(data);
 	   }
-	   // 페이지
-	
-	   
+	   // 페이지   
    }
    @Override
-   public void actionPerformed(ActionEvent e) {
+   public void itemStateChanged(ItemEvent e) {
 	// TODO Auto-generated method stub
-	  
+	 if(e.getSource()== box)
+	 {
+		 dname=box.getSelectedItem().toString();
+		 print();
+	 }
    }
+   
 }
 
