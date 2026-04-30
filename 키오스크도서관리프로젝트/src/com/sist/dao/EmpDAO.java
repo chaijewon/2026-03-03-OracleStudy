@@ -116,9 +116,9 @@ public class EmpDAO {
 			  getConnection();
 			  String sql="SELECT empno,ename,job,TO_CHAR(hiredate,'YYYY-MM-DD'),"
 					    +"emp2.deptno,dname,loc "
-					    +"FROM emp2 JOIN dept "
-					    +"ON emp2.deptno=dept.deptno "
-					    +"AND dept.dname=?";
+					    +"FROM emp2 JOIN dept2 "
+					    +"ON emp2.deptno=dept2.deptno "
+					    +"AND dept2.dname=?";
 			  // "AND dept.dname="+dname => 오류 
 			  // "AND dept.dname='"+dname+"'"
 			  // 문장 전송
@@ -161,8 +161,8 @@ public class EmpDAO {
 		  {
 			  getConnection();
 			  String sql="SELECT DISTINCT dname "
-					    +"FROM dept "
-					    +"ORDER BY deptno ASC";
+					    +"FROM dept2";
+					    
 			  ps=conn.prepareStatement(sql);
 			  ResultSet rs=ps.executeQuery();
 			  while(rs.next())

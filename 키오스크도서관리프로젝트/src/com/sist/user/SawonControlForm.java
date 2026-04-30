@@ -5,11 +5,12 @@ import javax.swing.*;
 public class SawonControlForm extends JPanel{
      JTabbedPane tp=new JTabbedPane();
      SawonList sList=new SawonList();
+     SawonFind sFind=new SawonFind();
      public SawonControlForm()
      {
     	 setLayout(new BorderLayout());
     	 tp.addTab("사원관리",sList);
-    	 tp.addTab("사원검색",new JPanel());
+    	 tp.addTab("사원검색",sFind);
     	 tp.addTab("근태관리",new JPanel());
     	 tp.addTab("급여관리",new JPanel());
     	 tp.addTab("부서관리",new JPanel());

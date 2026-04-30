@@ -14,6 +14,8 @@ implements ActionListener
    DefaultTableModel model;
    
    EmpDAO dao=new EmpDAO();
+   JComboBox box=new JComboBox();
+   String dname="개발부";
    public SawonFind()
    {
 	  
@@ -26,7 +28,7 @@ implements ActionListener
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// TODO Auto-generated method stub
-				return column==2 || column==4 || column==5;
+				return false;
 			}
 		   
 	   };
@@ -35,8 +37,13 @@ implements ActionListener
 	   setLayout(new BorderLayout());
 	   
 	   add("Center",js);
+	   add("North",box);
 	   
-	   
+	   List<String> list=dao.empGetDeptno();
+	   for(String s:list)
+	   {
+		   box.addItem(s);
+	   }
 	   print();
 	   
 	   
@@ -49,20 +56,21 @@ implements ActionListener
 		   model.removeRow(i);
 	   }
 	   
+	   List<EmpVO> list=dao.empFindData(dname);
 	   
 	   // 목록 
-//	   for(EmpVO vo:list)
-//	   {
-//		   String[] data={
-//			  String.valueOf(vo.getEmpno()),
-//			  vo.getEname(),
-//			  vo.getJob(),
-//			  vo.getDbday(),
-//			  vo.getDvo().getDname(),
-//			  vo.getDvo().getLoc()
-//		   };
-//		   model.addRow(data);
-//	   }
+	   for(EmpVO vo:list)
+	   {
+		   String[] data={
+			  String.valueOf(vo.getEmpno()),
+			  vo.getEname(),
+			  vo.getJob(),
+			  vo.getDbday(),
+			  vo.getDvo().getDname(),
+			  vo.getDvo().getLoc()
+		   };
+		   model.addRow(data);
+	   }
 	   // 페이지
 	
 	   
