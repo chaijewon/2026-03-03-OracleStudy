@@ -14,5 +14,5 @@ import lombok.Data;
 public class AttendVO {
    private int no,empno;
    private Date work_date,check_in,check_out;
-   private String status;
+   private String status,ename;
 }

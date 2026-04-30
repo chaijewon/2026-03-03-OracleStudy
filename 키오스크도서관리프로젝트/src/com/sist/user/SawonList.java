@@ -8,7 +8,7 @@ import javax.swing.table.*;
 import com.sist.dao.*;
 import com.sist.vo.*;
 public class SawonList extends JPanel
-implements ActionListener
+implements ActionListener,MouseListener
 {
    JTable table;
    DefaultTableModel model;
@@ -53,6 +53,7 @@ implements ActionListener
 	   
 	   b4.addActionListener(this);
 	   b5.addActionListener(this);
+	   table.addMouseListener(this);
 	   
    }
    // 현재 페이지 / 총페이지 => 변경 => 메모리 유지 
@@ -101,5 +102,44 @@ implements ActionListener
 			  print();
 		  }
 	  }
+   }
+   @Override
+   public void mouseClicked(MouseEvent e) {
+	// TODO Auto-generated method stub
+	  if(e.getSource()==table)
+	  {
+		  if(e.getClickCount()==2)
+		  {
+			  int row=table.getSelectedRow();
+			  String empno=model.getValueAt(row, 0).toString();
+			  int a=JOptionPane.showConfirmDialog(this, "삭제할까요?",
+					  "퇴사",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+			  if(a==JOptionPane.YES_OPTION)
+			  {
+				  dao.empDelete(Integer.parseInt(empno));
+				  print();
+			  }
+		  }
+	  }
+   }
+   @Override
+   public void mousePressed(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseReleased(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseEntered(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+   }
+   @Override
+   public void mouseExited(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
    }
 }

@@ -95,6 +95,8 @@ implements ActionListener
 			    	 scf.tp.setEnabledAt(3, true);
 			    	 scf.tp.setEnabledAt(4, true);
 			    	 scf.tp.setEnabledAt(5, true);
+			    	 
+			    	 scf.tp.setSelectedIndex(0);
 				}
 				else
 				{
@@ -105,6 +107,8 @@ implements ActionListener
 			    	 scf.tp.setEnabledAt(3, false);
 			    	 scf.tp.setEnabledAt(4, false);
 			    	 scf.tp.setEnabledAt(5, false);
+			    	 
+			    	 scf.tp.setSelectedIndex(2);
 				}
 				
 				card.show(getContentPane(), "SCF");

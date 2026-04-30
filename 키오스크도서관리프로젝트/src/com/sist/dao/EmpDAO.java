@@ -1,6 +1,7 @@
 package com.sist.dao;
 import java.util.*;
 
+import com.sist.vo.AttendVO;
 import com.sist.vo.EmpVO;
 
 import java.sql.*;
@@ -240,8 +241,120 @@ public class EmpDAO {
 		  }
 		  return vo;
 	  }
+	  // 퇴사 
+	  public void empDelete(int empno)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="DELETE FROM emp2 "
+					    +"WHERE empno="+empno;
+			  ps=conn.prepareStatement(sql);
+			  ps.executeUpdate();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
 	  //3. 부서 이동 => Combo
 	  //4. 출퇴근 관리 => 출근 / 퇴근 => 통계 
+	  public int checkIn_before(int empno)
+	  {
+		  int count=0;
+		  try
+		  {
+			  getConnection();
+			  // 하루 1번만 제한 
+			  String sql="SELECT COUNT(*) "
+					    +"FROM attend "
+					    +"WHERE empno=? "
+					    +"AND work_date=TRUNC(SYSDATE)";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, empno);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  count=rs.getInt(1);
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return count;
+	  }
+	  public void checkIn(AttendVO vo)
+	  {
+		  try
+		  {
+			  /*
+			   *NO        NOT NULL NUMBER       
+				EMPNO              NUMBER       
+				WORK_DATE          DATE         
+				CHECK_IN           DATE         
+				CHECK_OUT          DATE         
+				STATUS             VARCHAR2(20) 
+			   */
+			  getConnection();
+			  String sql="INSERT INTO attend(empno,work_date,check_in,status) "
+					    +"VALUES(?,TRUNC(SYSDATE),SYSDATE,?)";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, vo.getEmpno());
+			  ps.setString(2, vo.getStatus());
+			  ps.executeUpdate();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			 disConnection(); 
+		  }
+	  }
+	  public List<AttendVO> empAttendAllData()
+	  {
+		  List<AttendVO> list=
+				  new ArrayList<AttendVO>();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT a.empno,ename,work_date,check_in,"
+					  +"check_out,status "
+					  +"FROM attend a JOIN emp2 e ON a.empno=e.empno "
+					  +"AND work_date IS NOT NULL "
+					  +"ORDER BY no DESC";
+			  ps=conn.prepareStatement(sql);
+			  ResultSet rs=ps.executeQuery();
+			  // 날짜 => getDate() => 자바에서는 .toString()
+			  while(rs.next())
+			  {
+				  AttendVO vo=
+						  new AttendVO();
+				  vo.setEmpno(rs.getInt(1));
+				  vo.setEname(rs.getString(2));
+				  vo.setWork_date(rs.getDate(3));
+				  vo.setCheck_in(rs.getTimestamp(4));
+				  vo.setCheck_out(rs.getTimestamp(5));
+				  vo.setStatus(rs.getString(6));
+				  list.add(vo);
+			  }
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return list;
+	  }
 	  //5. 급여 
 	  //6. => 대출 / 도서 검색 / 도서 수정 , 추가 , 삭제 ...
 	  //7. => 구매 / 상품 검색 / 상품 수정 / 통계 => 회원 등급 결정
