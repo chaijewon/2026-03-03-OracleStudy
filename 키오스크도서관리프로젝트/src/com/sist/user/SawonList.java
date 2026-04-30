@@ -1,6 +1,8 @@
 package com.sist.user;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import com.sist.dao.*;
@@ -9,6 +11,11 @@ public class SawonList extends JPanel{
    JTable table;
    DefaultTableModel model;
    JButton b1,b2,b3;
+   JLabel la=new JLabel("0 page / 0 pages");
+   JButton b4,b5;
+   int curpage=1;
+   int totalpage=0;
+   EmpDAO dao=new EmpDAO();
    public SawonList()
    {
 	   b1=new JButton("사원 추가");
@@ -25,5 +32,40 @@ public class SawonList extends JPanel{
 	   p.add(b1);p.add(b2);p.add(b3);
 	   add("North",p);
 	   add("Center",js);
+	   
+	   b4=new JButton("이전");
+	   b5=new JButton("다음");
+	   JPanel pp=new JPanel();
+	   pp.add(b4);pp.add(la);pp.add(b5);
+	   add("South",pp);
+	   print();
+	   
+   }
+   // 현재 페이지 / 총페이지 => 변경 => 메모리 유지 
+   public void print()
+   {
+	   for(int i=model.getRowCount()-1;i>=0;i--)
+	   {
+		   model.removeRow(i);
+	   }
+	   
+	   List<EmpVO> list=dao.empListData(curpage);
+	   totalpage=dao.empTotalPage();
+	   // 목록 
+	   for(EmpVO vo:list)
+	   {
+		   String[] data={
+			  String.valueOf(vo.getEmpno()),
+			  vo.getEname(),
+			  vo.getJob(),
+			  vo.getDbday(),
+			  vo.getDvo().getDname(),
+			  vo.getDvo().getLoc()
+		   };
+		   model.addRow(data);
+	   }
+	   // 페이지
+	   la.setText(curpage+" page / "+totalpage+" pages");
+	   
    }
 }

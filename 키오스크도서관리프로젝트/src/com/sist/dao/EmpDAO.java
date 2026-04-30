@@ -51,8 +51,8 @@ public class EmpDAO {
 			  getConnection();
 			  String sql="SELECT empno,ename,job,TO_CHAR(hiredate,'YYYY-MM-DD'),"
 					    +"emp2.deptno,dname,loc "
-					    +"FROM emp2 JOIN dept "
-					    +"ON emp2.deptno=dept.deptno "
+					    +"FROM emp2 JOIN dept2 "
+					    +"ON emp2.deptno=dept2.deptno "
 					    +"ORDER BY hiredate ASC "
 					    +"OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY";
 			  // 문장 전송
