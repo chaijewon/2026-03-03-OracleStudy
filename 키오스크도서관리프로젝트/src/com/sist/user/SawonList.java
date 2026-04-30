@@ -24,7 +24,16 @@ public class SawonList extends JPanel{
 	   String[] col={"사번","이름","직위",
 			   "입사일","부서명","근무지"};
 	   String[][] row=new String[0][6];
-	   model=new DefaultTableModel(row,col);
+	   model=new DefaultTableModel(row,col)
+	   {
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return column==2 || column==4 || column==5;
+			}
+		   
+	   };
 	   table=new JTable(model);
 	   JScrollPane js=new JScrollPane(table);
 	   setLayout(new BorderLayout());
