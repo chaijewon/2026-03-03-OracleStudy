@@ -74,7 +74,7 @@ implements ActionListener
 	   b3.addActionListener(this);
 	   b4.addActionListener(this);
    }
-
+   
    @Override
    public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
@@ -99,6 +99,45 @@ implements ActionListener
 					  "이미 출근 했습니다!!");
 		  }
 	  }
+	  else if(e.getSource()==b2)
+	  {
+		    EmpDAO dao = new EmpDAO();
+
+		    int count = dao.checkIn_before(SawonMainForm.empno);
+
+		    if (count == 1)
+		    {
+		        dao.checkOut(SawonMainForm.empno);
+
+		        JOptionPane.showMessageDialog(this,
+		                "퇴근 처리 완료!!");
+		    }
+		    else
+		    {
+		        JOptionPane.showMessageDialog(this,
+		                "출근 기록이 없습니다!!");
+		    }
+	  }
+	  else if(e.getSource()==b3)
+	  {
+		    EmpDAO dao = new EmpDAO();
+
+		    int count = dao.checkIn_before(SawonMainForm.empno);
+
+		    if (count == 1)
+		    {
+		        dao.earlyLeave(SawonMainForm.empno);
+
+		        JOptionPane.showMessageDialog(this,
+		                "조퇴 처리 완료!!");
+		    }
+		    else
+		    {
+		        JOptionPane.showMessageDialog(this,
+		                "출근 기록이 없습니다!!");
+		    }
+	  }
+	 
 	  else if(e.getSource()==b4)
 	  {
 		  for(int i=model.getRowCount()-1;i>=0;i--)

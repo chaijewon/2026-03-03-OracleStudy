@@ -355,6 +355,52 @@ public class EmpDAO {
 		  }
 		  return list;
 	  }
+	  public void checkOut(int empno)
+	  {
+	      try
+	      {
+	          getConnection();
+
+	          String sql = "UPDATE attend "
+	                     + "SET check_out = SYSDATE "
+	                     + "WHERE empno = ? "
+	                     + "AND work_date = TRUNC(SYSDATE)";
+
+	          ps = conn.prepareStatement(sql);
+	          ps.setInt(1, empno);
+
+	          ps.executeUpdate();
+
+	      } catch(Exception ex) {
+	          ex.printStackTrace();
+	      } finally {
+	          disConnection();
+	      }
+	  }
+	  public void earlyLeave(int empno)
+	  {
+	      try
+	      {
+	          getConnection();
+
+	          String sql = "UPDATE attend "
+	                     + "SET check_out = SYSDATE, "
+	                     + "    status = ? "
+	                     + "WHERE empno = ? "
+	                     + "AND work_date = TRUNC(SYSDATE)";
+
+	          ps = conn.prepareStatement(sql);
+	          ps.setString(1, "조퇴");
+	          ps.setInt(2, empno);
+
+	          ps.executeUpdate();
+
+	      } catch(Exception ex) {
+	          ex.printStackTrace();
+	      } finally {
+	          disConnection();
+	      }
+	  }
 	  //5. 급여 
 	  //6. => 대출 / 도서 검색 / 도서 수정 , 추가 , 삭제 ...
 	  //7. => 구매 / 상품 검색 / 상품 수정 / 통계 => 회원 등급 결정

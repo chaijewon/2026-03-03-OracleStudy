@@ -22,9 +22,6 @@ implements ActionListener
     	add("LOGIN",login);
     	add("SCF",scf);
     	
-    	
-    	
-    	
     	setSize(800, 600);
     	setVisible(true);
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
