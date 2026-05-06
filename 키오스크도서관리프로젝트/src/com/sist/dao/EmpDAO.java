@@ -289,6 +289,7 @@ public class EmpDAO {
 		  }
 		  return count;
 	  }
+	  // 출근 처리 
 	  public void checkIn(AttendVO vo)
 	  {
 		  try
@@ -317,6 +318,7 @@ public class EmpDAO {
 			 disConnection(); 
 		  }
 	  }
+	  
 	  public List<AttendVO> empAttendAllData()
 	  {
 		  List<AttendVO> list=
@@ -355,6 +357,7 @@ public class EmpDAO {
 		  }
 		  return list;
 	  }
+	  // 퇴근 처리 
 	  public void checkOut(int empno)
 	  {
 	      try
@@ -377,6 +380,8 @@ public class EmpDAO {
 	          disConnection();
 	      }
 	  }
+	  
+	  // 조퇴 처리 
 	  public void earlyLeave(int empno)
 	  {
 	      try

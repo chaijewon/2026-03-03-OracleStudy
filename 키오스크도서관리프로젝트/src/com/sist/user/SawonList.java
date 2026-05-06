@@ -1,6 +1,7 @@
 package com.sist.user;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.*;
@@ -54,6 +55,7 @@ implements ActionListener,MouseListener
 	   b4.addActionListener(this);
 	   b5.addActionListener(this);
 	   table.addMouseListener(this);
+	   b1.addActionListener(this);
 	   
    }
    // 현재 페이지 / 총페이지 => 변경 => 메모리 유지 
@@ -101,6 +103,12 @@ implements ActionListener,MouseListener
 			  curpage++;
 			  print();
 		  }
+	  }
+	  else if(e.getSource()==b1)
+	  {
+		  String[] emptyRow = new String[model.getColumnCount()];
+		  Arrays.fill(emptyRow, "");
+		  model.addRow(emptyRow);
 	  }
    }
    @Override
