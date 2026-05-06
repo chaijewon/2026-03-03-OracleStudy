@@ -109,6 +109,8 @@ implements ActionListener,MouseListener
 		  String[] emptyRow = new String[model.getColumnCount()];
 		  Arrays.fill(emptyRow, "");
 		  model.addRow(emptyRow);
+		  JFileChooser fileChooser = new JFileChooser();
+          int result = fileChooser.showOpenDialog(this);
 	  }
    }
    @Override
